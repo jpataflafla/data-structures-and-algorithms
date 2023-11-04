@@ -5,6 +5,7 @@ class HashTable {
   }
 
   _hash(key) {
+    // we are just looping over key, not whole collection so it is considered O(1) - constant time complexity
     // _ is to inform others that it should be treated as a private method
     // hash function
     let hash = 0;
@@ -16,6 +17,7 @@ class HashTable {
   }
 
   set(key, value) {
+    // just adding/pushing data O(1)
     let address = this._hash(key);
     // if (!this.data[address]) {
     //   // if there is nothing at this address then add the element
@@ -40,6 +42,7 @@ class HashTable {
   }
 
   get(key) {
+    //if there is no collisions O(n), but sometimes in case of collision it may become O(n)
     let address = this._hash(key);
     const currentBucket = this.data[address];
     console.log("current bucket: " + currentBucket);
@@ -56,6 +59,29 @@ class HashTable {
 
     return undefined; // nothing exists at this address
   }
+
+  keys() {
+    //by looping over the elements to get the keys -> O(n), and we also lose the order of the elements - it may be different from the insertion order
+    if (!this.data.length) {
+      return undefined;
+    }
+    let result = [];
+    // loop through all the elements
+    for (let i = 0; i < this.data.length; i++) {
+      // if it's not an empty memory cell/ bucket
+      if (this.data[i] && this.data[i].length) {
+        // but also loop through all the potential collisions
+        if (this.data.length > 1) {
+          for (let j = 0; j < this.data[i].length; j++) {
+            result.push(this.data[i][j][0]);
+          }
+        } else {
+          result.push(this.data[i][0]);
+        }
+      }
+    }
+    return result;
+  }
 }
 
 const myHashTable = new HashTable(50);
@@ -64,3 +90,5 @@ myHashTable.set("apples", 40);
 
 console.log(myHashTable.get("grapes"));
 console.log(myHashTable.get("apples"));
+
+console.log();
