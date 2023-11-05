@@ -46,7 +46,7 @@ public class Program
 
 /*Comparison between HashSet, Hashtable, and Dictionary:
 
-HashSet<T>:
+HashSet<T>: // it is in generic space so type safety benefit - if you don't want to use types -> hashtable
 
 Stores unique elements of type T.
 Based on a hash table data structure.
