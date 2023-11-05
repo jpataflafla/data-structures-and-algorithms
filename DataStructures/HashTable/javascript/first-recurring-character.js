@@ -51,7 +51,14 @@ function firstRecurringCharacterObjectAsHashTable(input) {
   let hashTable = {}; // Initialize a hash table (an object in JavaScript) to keep track of seen characters
 
   for (let i = 0; i < input.length; i++) {
-    if (hashTable[input[i]]) {
+    if (hashTable[input[i]] !== undefined) {
+      // In JavaScript, when using an object as a key-value pair,
+      // if a key is present but its corresponding value is 0, false, or null,
+      // it can be incorrectly evaluated as a falsy value in a conditional check.
+      // Therefore, to accurately determine if the key exists and has a defined value,
+      // we use strict inequality comparison (!== undefined) to explicitly check if the value is not undefined.
+      // This ensures that even if the value is 0, false, or null, the condition will evaluate to true.
+
       // If the character is already in the hash table, it's a recurring character
       return input[i]; // Return the recurring character
     }
