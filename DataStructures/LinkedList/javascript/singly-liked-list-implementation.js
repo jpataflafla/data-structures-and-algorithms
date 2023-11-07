@@ -63,7 +63,7 @@ class LinkedList {
 
   traverseToIndex(index) {
     //check parameters
-    if (index < 0 || index > this.length - 1) {
+    if (index < 0 || index >= this.length) {
       throw new Error(
         "index must be more than zero and less that (length - 1)"
       );
@@ -81,8 +81,19 @@ class LinkedList {
   insert(index, value) {
     // O(n) - iteration is needed to get a reference of node at given index inside the list
     // Check if the index is valid (non-negative and within bounds)
-    if (index < 0 || index > this.length) {
+    if (index < 0 || index >= this.length) {
       throw new Error("Invalid index");
+    }
+
+    if (index === 0) {
+      this.prepend(value);
+      // Return the updated list
+      return this.printList();
+    }
+    if (index === this.length - 1) {
+      this.append(value);
+      // Return the updated list
+      return this.printList();
     }
 
     const newNode = new Node(value);
@@ -113,6 +124,20 @@ class LinkedList {
       throw new Error("Invalid index");
     }
 
+    if (index === 0) {
+      if (this.length === 1) {
+        // If there's only one element in the list, set both head and tail to null
+        this.head = null;
+        this.tail = null;
+      } else {
+        // If there are more than one elements, update the head pointer
+        this.head = this.head.next;
+      }
+
+      this.length--;
+      return this.printList();
+    }
+
     // Find the node before the desired index
     const previousNode = this.traverseToIndex(index - 1);
 
@@ -121,6 +146,10 @@ class LinkedList {
 
     // Update the next pointer of the previous node to skip over the node to be removed
     previousNode.next = nodeToRemove.next;
+
+    if (index === this.length - 1) {
+      this.tail = previousNode; // If removing the last node, update Tail to be the previous node
+    }
 
     // Decrement the length of the list
     this.length--;
@@ -146,8 +175,13 @@ myLinkedList.append(16);
 myLinkedList.prepend(1);
 console.log(myLinkedList.printList());
 myLinkedList.insert(2, 123);
+myLinkedList.insert(0, 123);
 console.log(myLinkedList.printList());
 myLinkedList.remove(2);
 console.log(myLinkedList.printList());
 myLinkedList.remove(myLinkedList.length - 1);
+myLinkedList.remove(0);
 console.log(myLinkedList.printList());
+console.log(myLinkedList.length);
+console.log(myLinkedList.head);
+console.log(myLinkedList.tail);

@@ -28,7 +28,7 @@ public class LinkedList
     Node newNode = new Node(value); // Create a new node with the given value
     Head = newNode; // Set both Head and Tail to this node
     Tail = newNode;
-    Length = 1; // Length is initially 1
+    Length = 1; // Length is initially 1 - head only
   }
 
   // Append method adds a new node to the end of the list
@@ -70,36 +70,29 @@ public class LinkedList
   // Insert method adds a new node at a specified index
   public void Insert(int index, int value)
   {
-    if (index < 0 || index > Length)
+    if (index < 0 || index >= Length)
     {
       throw new ArgumentException("Invalid index"); // Throw an error if index is out of bounds
     }
 
-    Node newNode = new Node(value); // Create a new node with the given value
 
     if (index == 0)
     {
-      newNode.Next = Head; // Insert at the beginning: Make new node point to current Head
-      Head = newNode; // Update Head to be the new node
-      if (Length == 0)
-      {
-        Tail = newNode; // If list was empty, also update Tail
-      }
+      Prepend(value);
+      return;
     }
-    else if (index == Length)
+    if (index == Length - 1)
     {
-      Tail.Next = newNode; // Insert at the end: Make current Tail point to the new node
-      Tail = newNode; // Update Tail to be the new node
-    }
-    else
-    {
-      Node previousNode = TraverseToIndex(index - 1); // Find the node before the specified index
-      Node nodeAtIndex = previousNode.Next; // Get the node at the specified index
-
-      previousNode.Next = newNode; // Make previous node point to the new node
-      newNode.Next = nodeAtIndex; // Make new node point to the node at the specified index
+      Append(value);
+      return;
     }
 
+    Node newNode = new Node(value); // Create a new node with the given value
+    Node previousNode = TraverseToIndex(index - 1); // Find the node before the specified index
+    Node nodeAtIndex = previousNode.Next; // Get the node at the specified index
+
+    previousNode.Next = newNode; // Make previous node point to the new node
+    newNode.Next = nodeAtIndex; // Make new node point to the node at the specified index
     Length++; // Increase the length of the list
   }
 
@@ -113,23 +106,28 @@ public class LinkedList
 
     if (index == 0)
     {
-      Head = Head.Next; // Remove the first node: Update Head to point to the next node
       if (Length == 1)
       {
+        Head = null;
         Tail = null; // If list only had one node, update Tail to null
       }
-    }
-    else
-    {
-      Node previousNode = TraverseToIndex(index - 1); // Find the node before the specified index
-      Node nodeToRemove = previousNode.Next; // Get the node to be removed
-
-      previousNode.Next = nodeToRemove.Next; // Make previous node skip over the node to be removed
-
-      if (index == Length - 1)
+      else
       {
-        Tail = previousNode; // If removing the last node, update Tail to be the previous node
+        Head = Head.Next; // Remove the first node: Update Head to point to the next node
       }
+      Length--;
+      return;
+    }
+
+
+    Node previousNode = TraverseToIndex(index - 1); // Find the node before the specified index
+    Node nodeToRemove = previousNode.Next; // Get the node to be removed
+
+    previousNode.Next = nodeToRemove.Next; // Make previous node skip over the node to be removed
+
+    if (index == Length - 1)
+    {
+      Tail = previousNode; // If removing the last node, update Tail to be the previous node
     }
 
     Length--; // Decrease the length of the list
@@ -169,6 +167,12 @@ class Program
     Console.WriteLine(string.Join(" --> ", myLinkedList.PrintList()));
 
     myLinkedList.Remove(myLinkedList.Length - 1);
+    myLinkedList.Remove(0);
+
     Console.WriteLine(string.Join(" --> ", myLinkedList.PrintList()));
+
+    Console.WriteLine(myLinkedList.Head.Next);
+    Console.WriteLine(myLinkedList.Tail.Next == null ? "null" : myLinkedList.Tail.Next);
+
   }
 }
