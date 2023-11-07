@@ -145,6 +145,28 @@ public class LinkedList
     }
     return listValues; // Return the list of values
   }
+
+  public void Reverse()
+  {
+    Node previousNode = null; // This will keep track of the previous node
+    Node currentNode = Head; // Start with the head of the list
+    Node nextNode = null; // This will hold the next node in the original list
+
+    while (currentNode != null)
+    {
+      nextNode = currentNode.Next; // Store the next node in the original list
+      currentNode.Next = previousNode; // Reverse the link to the previous node
+
+      // Move the pointers one step forward
+      previousNode = currentNode; // Update the previous node for the next iteration
+      currentNode = nextNode; // Move to the next node in the original list
+    }
+
+    // At this point, currentNode is null, meaning we've reached the end of the list
+    // previousNode now holds the last node in the original list, which is the new head
+    Head = previousNode; // Update the head of the list to the last node
+  }
+
 }
 
 // Main program to demonstrate the linked list operations
@@ -174,5 +196,11 @@ class Program
     Console.WriteLine(myLinkedList.Head.Next);
     Console.WriteLine(myLinkedList.Tail.Next == null ? "null" : myLinkedList.Tail.Next);
 
+    Console.WriteLine("reverse linked list:");
+    myLinkedList.Reverse();
+    Console.WriteLine(string.Join(" --> ", myLinkedList.PrintList()));
+
+    Console.WriteLine(myLinkedList.Head.Next);
+    Console.WriteLine(myLinkedList.Tail.Next == null ? "null" : myLinkedList.Tail.Next);
   }
 }

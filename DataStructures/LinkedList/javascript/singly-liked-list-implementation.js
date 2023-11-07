@@ -166,6 +166,35 @@ class LinkedList {
     }
     return array;
   }
+
+  //Reverse linked list
+  reverse() {
+    let previousNode = null; // This will keep track of the previous node
+    let currentNode = this.head; // Start with the head of the list
+    let nextNode = null; // This will hold the next node in the original list
+
+    // If there is only one node, there's nothing to reverse
+    if (!currentNode.next) {
+      return this.printList;
+    }
+
+    this.tail = this.head; // Update tail to be the current head
+
+    while (currentNode !== null) {
+      nextNode = currentNode.next; // Store the next node in the original list
+      currentNode.next = previousNode; // Reverse the link to the previous node
+
+      // Move the pointers one step forward
+      previousNode = currentNode; // Update the previous node for the next iteration
+      currentNode = nextNode; // Move to the next node in the original list
+    }
+
+    // At this point, currentNode is null, meaning we've reached the end of the list
+    // previousNode now holds the last node in the original list, which is the new head
+    this.head = previousNode; // Update the head of the list to the last node
+
+    return this.printList();
+  }
 }
 
 const myLinkedList = new LinkedList(10);
@@ -185,3 +214,5 @@ console.log(myLinkedList.printList());
 console.log(myLinkedList.length);
 console.log(myLinkedList.head);
 console.log(myLinkedList.tail);
+
+console.log(myLinkedList.reverse());
