@@ -36,7 +36,7 @@ class HashTable {
       this.data[address] = [];
     }
 
-    this.data[address].push([key, value]);
+    this.data[address].push([key, value]); // this is simple hash collision handling - usually linked list is better to avoid shifting elements in this arrays and have fast insertion deletion
     console.log("data: ");
     console.log(this.data);
   }

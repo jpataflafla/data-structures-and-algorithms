@@ -38,6 +38,7 @@ public class HashTable<TKey, TValue>
 
     List<(TKey, TValue)> currentBucket = new List<(TKey, TValue)>(data[address]); // Get the current bucket
 
+    // this is simple hash collision handling - usually linked list is better to avoid shifting elements in this arrays and have fast insertion deletion
     currentBucket.Add((key, value)); // Add the key-value pair to the bucket
     data[address] = currentBucket.ToArray(); // Update the data with the modified bucket
 
