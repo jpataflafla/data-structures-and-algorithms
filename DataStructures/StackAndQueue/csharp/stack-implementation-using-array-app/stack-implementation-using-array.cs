@@ -1,5 +1,10 @@
 ﻿using System;
 
+public class EmptyStackException : Exception
+{
+  public EmptyStackException() : base("The stack is empty.") { }
+}
+
 public class Stack<T>
 {
   private T[] data; // Use an array to store the elements in the stack
@@ -38,7 +43,8 @@ public class Stack<T>
   {
     if (Length == 0)
     {
-      return default; // Return default value for type if stack is empty
+      throw new EmptyStackException();
+      //return default; // Return default value for type if stack is empty
     }
 
     T topElement = data[Length - 1];
