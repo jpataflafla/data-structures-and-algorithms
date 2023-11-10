@@ -45,7 +45,7 @@ public class QueueUsingStacks<T>
       tempStack.Push(_enqueueStack.Pop());
     }
 
-    foreach (var item in _dequeueStack)// Foreach iteration IS POPPING ELEMENTS FROM THE STACK
+    foreach (var item in _dequeueStack)
     {
       elements.Add(item);
     }
