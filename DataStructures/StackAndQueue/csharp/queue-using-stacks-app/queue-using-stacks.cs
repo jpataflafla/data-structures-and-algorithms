@@ -37,7 +37,7 @@ public class QueueUsingStacks<T>
     List<T> elements = new List<T>();
     FillDequeueStack();
 
-    // Create a temporary stack to store elements from _enqueueStack
+    // Create a temporary stack to store elements from _enqueueStack in reverse order
     Stack<T> tempStack = new Stack<T>();
 
     while (_enqueueStack.Count > 0)
