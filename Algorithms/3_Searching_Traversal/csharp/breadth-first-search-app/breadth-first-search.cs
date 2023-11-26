@@ -217,44 +217,54 @@ public class BinarySearchTree
   //BFS
   public List<int> BreadthFirstSearchIterative()
   {
-    var list = new List<int>();
-    var queue = new Queue<Node>();
-    queue.Enqueue(this.Root);
+    List<int> list = new List<int>();
+    if (Root == null)
+      return list;
+
+    Queue<Node> queue = new Queue<Node>();
+    queue.Enqueue(Root);
 
     while (queue.Count > 0)
     {
-      var node = queue.Dequeue();
-      list.Add(node.Value);
-      if (node.Left != null)
-      {
-        queue.Enqueue(node.Left);
-      }
-      if (node.Right != null)
-      {
-        queue.Enqueue(node.Right);
-      }
+      Node currentNode = queue.Dequeue();
+      list.Add(currentNode.Value);
 
+      if (currentNode.Left != null)
+        queue.Enqueue(currentNode.Left);
+
+      if (currentNode.Right != null)
+        queue.Enqueue(currentNode.Right);
     }
+
     return list;
   }
 
-  public List<int> BreadthFirstSearchRecursive(Queue<Node> queue, List<int> list)
+  // BFS Recursive
+  public List<int> BreadthFirstSearchRecursive()
+  {
+    List<int> list = new List<int>();
+    Queue<Node> queue = new Queue<Node>();
+
+    if (Root == null)
+      return list;
+
+    queue.Enqueue(Root);
+    return BreadthFirstSearchRecursive(queue, list);
+  }
+
+  private List<int> BreadthFirstSearchRecursive(Queue<Node> queue, List<int> list)
   {
     if (queue.Count == 0)
-    {
       return list;
-    }
 
-    var node = queue.Dequeue();
-    list.Add(node.Value);
-    if (node.Left != null)
-    {
-      queue.Enqueue(node.Left);
-    }
-    if (node.Right != null)
-    {
-      queue.Enqueue(node.Right);
-    }
+    Node currentNode = queue.Dequeue();
+    list.Add(currentNode.Value);
+
+    if (currentNode.Left != null)
+      queue.Enqueue(currentNode.Left);
+
+    if (currentNode.Right != null)
+      queue.Enqueue(currentNode.Right);
 
     return BreadthFirstSearchRecursive(queue, list);
   }
@@ -277,12 +287,7 @@ public class Program
     tree.Insert(1);
 
     Console.WriteLine(string.Join(" ", tree.BreadthFirstSearchIterative()));
-    var startWithNode = tree?.Root ?? throw new ArgumentNullException(nameof(tree), "The root of the tree is null.");
-
-    Console.WriteLine(string.Join(" ",
-    tree.BreadthFirstSearchRecursive(
-      new Queue<Node>(new[] { startWithNode }),
-      new List<int>())));
+    Console.WriteLine(string.Join(" ", tree.BreadthFirstSearchRecursive()));
 
     Console.WriteLine(tree.PrintTree());
 
