@@ -16,6 +16,7 @@ fibonacci(7); //this will make 13 calculations with recursive function, 8 -> 21,
 // Function that returns a memoized Fibonacci function
 let memoizedCalculationCalls = 0;
 function fibonacciMemoization() {
+  //top down recursive approach
   // Object to store previously computed Fibonacci values for reuse
   let cache = {};
 
@@ -49,3 +50,17 @@ console.log(memoizedFibonacci(10));
 console.log(memoizedCalculationCalls + " memoized calculations");
 console.log(fibonacci(10));
 console.log(calculationsCount + " classic recursive fibonacci calculations");
+
+//bottom up approach
+let bottomUpCalculationCalls = 0;
+function fibonacciBottomUpApproach(n) {
+  let answer = [0, 1];
+  for (let i = 2; i < n; i++) {
+    bottomUpCalculationCalls++;
+
+    answer.push(answer[i - 2] + answer[i - 1]);
+  }
+  return answer.pop();
+}
+console.log(fibonacciBottomUpApproach(10));
+console.log(bottomUpCalculationCalls + " fibonacciBottomUpApproach");
