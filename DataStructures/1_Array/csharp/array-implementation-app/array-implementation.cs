@@ -100,7 +100,28 @@ class MyArray
         }
 
         // Set the last item to null (or default(Object) for reference types)
-        _data[_length - 1] = null;
+        //_data[_length - 1] = null; //this is not removing item and can make memory leak, so ..
+        // Object[] newData = new Object[_length - 1];
+        // for (int i = 0; i < newData.Length; i++)
+        // {
+        //     newData[i] = _data[i];
+        // }
+        // _data = newData;
+        //or just
+        if (_length > 1)
+        {
+            Object[] newData = new Object[_length - 1];
+            Array.Copy(_data, 0, newData, 0, _length - 1); // This can perform a complete shift when the first operation of this method is commented out, and the start index of _data in the Copy method is set to 1.
+
+            _data = newData;
+        }
+        else
+        {
+            // Handle the case when the original array has only one element or is empty.
+            // You may want to assign an empty array or null to _data, depending on your requirements.
+            _data = new Object[0]; // or _data = null;
+        }
+
 
         // Decrease the length to reflect the removal of an item
         _length--;
