@@ -11,7 +11,6 @@ public class Card
     private readonly string[] _cardNumbers;
 
     public int CardNumber { get; private set; }
-    
     public int CountOfMatchingNumbers { get; private set; }
 
     public int CardSum { get; }
@@ -39,7 +38,10 @@ public class Card
         {
             return int.Parse(matchNumber.Value);
         }
-        throw new Exception("No number found in the name of the card.");
+        else
+        {
+            throw new Exception("No number found in the name of the card.");
+        }
     }
 
     private int CalculateCardPoints()
