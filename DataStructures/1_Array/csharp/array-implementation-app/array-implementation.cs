@@ -111,7 +111,7 @@ class MyArray
         if (_length > 1)
         {
             Object[] newData = new Object[_length - 1];
-            Array.Copy(_data, 0, newData, 0, _length - 1); // This can perform a complete shift when the first operation of this method is commented out, and the start index of _data in the Copy method is set to 1.
+            Array.Copy(_data, 0, newData, 0, _length - 1);
 
             _data = newData;
         }
@@ -119,7 +119,7 @@ class MyArray
         {
             // Handle the case when the original array has only one element or is empty.
             // You may want to assign an empty array or null to _data, depending on your requirements.
-            _data = new Object[0]; // or _data = null;
+            _data = new Object[1]; // or _data = null;
         }
 
 
