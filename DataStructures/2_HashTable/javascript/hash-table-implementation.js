@@ -42,7 +42,7 @@ class HashTable {
   }
 
   get(key) {
-    //if there is no collisions O(n), but sometimes in case of collision it may become O(n)
+    //if there is no collisions O(1), but sometimes in case of the worst case scenario (collision with all elements) it may become O(n)
     let address = this._hash(key);
     const currentBucket = this.data[address];
     console.log("current bucket: " + currentBucket);
